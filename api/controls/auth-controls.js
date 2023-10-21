@@ -1,12 +1,13 @@
 import User from "../models/User-model.js";
 import bycrypt from "bcryptjs";
-export const signUp = async (req, res) => {
+import { errorHandler } from "../utilites/error.js";
+export const signUp = async (req, res, next) => {
   console.log(req.body);
-  const { userName, email, password } = req.body; // req.body have the information that we send
 
-  const hashedPassword = bycrypt.hashSync(password, 10); // hashSync already is using the await so we don't need to  write await
   //  hasySync :takes two arg , pass , no Of hasshing
   try {
+    const { userName, email, password } = req.body; // req.body have the information that we send
+    const hashedPassword = bycrypt.hashSync(password, 10); // hashSync already is using the await so we don't need to  write await
     const newUser = new User({
       userName: userName,
       email: email,
@@ -15,6 +16,6 @@ export const signUp = async (req, res) => {
     await newUser.save(); // it takes some tiems depending on you internet  so make it await
     res.status(201).json({ Message: "user created Successfully" }); // 201 means something created
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    next(errorHandler(404,"somethign happen"));
   }
 };
