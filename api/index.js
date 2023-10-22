@@ -24,7 +24,7 @@ app.listen(PORT,(req,res)=>{
 // first api test 
 
 app.use('/api/user',userRouter)
-app.use('/auth',authRouter)
+app.use('/api/auth',authRouter)
 
 app.use((err,req,res,next)=>{
     const statusCode  = err.statusCode || 500

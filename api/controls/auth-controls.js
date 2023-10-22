@@ -14,8 +14,8 @@ export const signUp = async (req, res, next) => {
       password: hashedPassword,
     });
     await newUser.save(); // it takes some tiems depending on you internet  so make it await
-    res.status(201).json({ Message: "user created Successfully" }); // 201 means something created
+    return res.status(201).json({ Message: "user created Successfully" }); // 201 means something created
   } catch (error) {
-    next(errorHandler(404,"somethign happen"));
+    next(error);
   }
 };
