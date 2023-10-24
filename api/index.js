@@ -20,11 +20,11 @@ const PORT  = 3000;
 app.listen(PORT,(req,res)=>{
     console.log(`app is listening on port ${PORT}`)
 })
-// creating a middle ware 
 // first api test 
 
 app.use('/api/user',userRouter)
 app.use('/api/auth',authRouter)
+// creating a middle ware 
 
 app.use((err,req,res,next)=>{
     const statusCode  = err.statusCode || 500
