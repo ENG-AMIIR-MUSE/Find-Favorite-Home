@@ -1,0 +1,47 @@
+[33mcommit ecd03999398b28642472e16b43cc1125b6cea013[m[33m ([m[1;36mHEAD -> [m[1;32mMain[m[33m, [m[1;31morigin/Main[m[33m)[m
+Author: AmirMuse <amirlearn08@gmail.com>
+Date:   Mon Oct 23 22:00:19 2023 -0700
+
+    env
+
+[33mcommit 68bf14ec0f7f70257a005b286cdecc35614759bd[m
+Author: AmirMuse <amirlearn08@gmail.com>
+Date:   Mon Oct 23 19:31:02 2023 -0700
+
+    created login api
+
+[33mcommit 695beea8ed0df275cb593a4d3871e266146c8794[m
+Author: AmirMuse <amirlearn08@gmail.com>
+Date:   Sun Oct 22 11:05:50 2023 -0700
+
+    Login Page Functionality is completed with error handling and loading
+
+[33mcommit 3d2f7f9282777c657d567806af0457b1c57eecd2[m
+Author: AmirMuse <amirlearn08@gmail.com>
+Date:   Fri Oct 20 20:25:17 2023 -0700
+
+    created a middleWare and function to handle a possible error that can happen in our application
+
+[33mcommit 27267d71e3f49b8e6c52a02e8f46c3bf6a31bf8f[m
+Author: AmirMuse <amirlearn08@gmail.com>
+Date:   Fri Oct 20 19:54:34 2023 -0700
+
+    Created Sign UP api  and hashed The password
+
+[33mcommit ec566365bfaee27aefa9699449ac47139ae11d3f[m
+Author: AmirMuse <amirlearn08@gmail.com>
+Date:   Thu Oct 19 20:38:45 2023 -0700
+
+    created test api route
+
+[33mcommit 482cb54ac3a739d0e09546f3db4e9a5df228320a[m
+Author: AmirMuse <amirlearn08@gmail.com>
+Date:   Thu Oct 19 20:18:19 2023 -0700
+
+    created the user schema
+
+[33mcommit 1d7e0dc18c890fd4e31fa2d76d1af07c26739c51[m
+Author: AmirMuse <amirlearn08@gmail.com>
+Date:   Thu Oct 19 19:51:11 2023 -0700
+
+    added login , Sign UP and react router dom  also added backend api
