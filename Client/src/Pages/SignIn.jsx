@@ -2,13 +2,16 @@ import { AiOutlineMail } from "react-icons/ai";
 import { AiOutlineLock } from "react-icons/ai";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signInStart,signSuccess,signInFailure } from "../redux/userSlice";
 // import '/'
 export default function SignIn() {
-  const [error, setError] = useState("");
-  const [formData, setFormData] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({})
+  const {error, loading}= useSelector((state)=>state.user)
+  const dispatch  =  useDispatch()
   const navigate = useNavigate();
   const handleOnChange = (e) => {
+     
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
@@ -17,7 +20,8 @@ export default function SignIn() {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    dispatch(signInStart())
+
     try {
       const res = await fetch("/api/auth/signin", {
         method: "POST",
@@ -28,15 +32,16 @@ export default function SignIn() {
       });
       const data = await res.json();
 
-      setError(null);
+     
       if (data.success === false) {
-        setError(data.Message);
+        dispatch(signInFailure(data.Message))
+       
 
-        setLoading(false);
+        
       } else {
         navigate("/");
       }
-      setLoading(false);
+      dispatch(signSuccess(data))
     } catch (error) {
       console.log(error);
     }
