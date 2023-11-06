@@ -3,6 +3,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { AiOutlineLock } from "react-icons/ai";
 import { useState } from "react";
 import {useNavigate} from  'react-router-dom'
+import Oauth from '../Components/Oauth'
 // import '/'
 export default function SignUp() {
   const [error, setError] = useState(null);
@@ -11,12 +12,15 @@ export default function SignUp() {
   const navigate = useNavigate()
   const handleSubmit = async (e) => {
     try {
+      // setLoading : true 
+      
       setLoading(true);
       e.preventDefault();
       const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+
         },
         body: JSON.stringify(formData),
       });
@@ -97,9 +101,8 @@ export default function SignUp() {
           >
             {loading ? "Loading...." : "sign UP"}
           </button>
-          <button className="bg-red-900 text-white p-3 rounded-lg uppercase">
-            Sign Up with Google
-          </button>
+          <Oauth/>
+
           <p className="text-right">
             Have an Account ?{" "}
             <span className="text-blue-900 mx-2">Sign In</span>
