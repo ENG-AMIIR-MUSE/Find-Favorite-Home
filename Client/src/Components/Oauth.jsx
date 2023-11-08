@@ -20,7 +20,7 @@ const dispatch =  useDispatch()
             body:JSON.stringify({
               userName:result.user.displayName,
             email:result.user.email,
-          photo:result.user.photoURL})
+          avatar:result.user.photoURL})
         })
         const data  = await  res.json()
         console.log("data..",data)
