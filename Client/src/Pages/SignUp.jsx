@@ -107,7 +107,7 @@ export default function SignUp() {
             Have an Account ?{" "}
             <span className="text-blue-900 mx-2">Sign In</span>
           </p>
-          {error ? <p className="text-red-500">{error}</p> : "no error"}
+          {error ? <p className="text-red-500">{error}</p> : ""}
         </form>
       </div>
     </>

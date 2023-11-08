@@ -92,7 +92,7 @@ export default function SignIn() {
             <span className="text-blue-900 mx-2 ">Sign Up</span>
           </p>
           <p className={error ? "text-red-500" : "text-green-800"}>
-            {error ? error : "Login Successfully"}
+            {error ? error : ""}
             {console.log(error)}
           </p>
         </form>
