@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector ,useDispatch} from "react-redux";
 import { useRef } from "react";
+
 import {
   getDownloadURL,
   getStorage,
@@ -8,10 +9,13 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
+import { updateProfileFailure, updateProfileStart, updateProfileSuccess } from "../redux/userSlice";
 export default function Profile() {
+
   const [file, setFile] = useState(undefined);
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser,loading,error } = useSelector((state) => state.user);
   const [filePerc, setFilePerc] = useState(0);
+  const dispatch = useDispatch();
   const [fileError, setFileError] = useState(null);
   const [formData, setFormData] = useState({});
   const fileRef = useRef(null);
@@ -20,7 +24,7 @@ export default function Profile() {
       handleFileUpload(file);
     }
   }, [file]);
-
+  console.log("err",error)
 
   const handleFileUpload = (file) => {
     const storage = getStorage(app);
@@ -44,7 +48,28 @@ export default function Profile() {
       }
     );
   };
-
+  const handleOnChange = async (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+  console.log("id ....",currentUser._id)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(updateProfileStart());
+    const response = await fetch(`api/user/${currentUser._id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    const res = await response.json();
+    console.log("res",res)
+    if(res.success === false){
+      dispatch(updateProfileFailure(res.Message))
+      return ;
+    }
+    dispatch(updateProfileSuccess(res))
+  };
   return (
     <div className="max-w-lg p-3 my-7 mx-auto">
       <h1 className="text-center text-xl ">Profile</h1>
@@ -65,7 +90,9 @@ export default function Profile() {
       </div>
       <p className="text-center mb-2">
         {fileError ? (
-          <span className="text-red-900">There is an Error While Uplaoding File</span>
+          <span className="text-red-900">
+            There is an Error While Uplaoding File
+          </span>
         ) : filePerc > 0 && filePerc < 100 ? (
           <span className="text-slate-900">{`Uploading ${filePerc}%`}</span>
         ) : filePerc === 100 ? (
@@ -75,27 +102,37 @@ export default function Profile() {
         )}
       </p>
 
-      <form action="" className="flex flex-col gap-2 ">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2 ">
         <input
           type="text"
           placeholder="Enter Your Name"
           className="rounded-lg  h-[40px] pl-3"
+          defaultValue={currentUser.userName}
+          onChange={handleOnChange}
+          id="userName"
         />
         <input
           type="email"
           placeholder="Enter Your email"
           className="rounded-lg  h-[40px] pl-3"
+          defaultValue={currentUser.email}
+          id="email"
+          onChange={handleOnChange}
         />
         <input
           type="password"
           placeholder="Enter Your password"
           className="rounded-lg  h-[40px] pl-3"
+          id="password"
+          onChange={handleOnChange}
         />
-        <input
+        <button
           type="submit"
-          value="submit"
+        
+          disabled= {loading}
+
           className="rounded-lg  pl-3 bg-blue-900 text-white p-3 text-xl"
-        />
+         >{loading ? "Loading ...":"Update"}</button>
         <input
           type="button"
           value="Create Listings"
@@ -107,6 +144,7 @@ export default function Profile() {
         </div>
         {/* <input type="text" placeholder='Enter Your Name' /> */}
       </form>
+          {error ? <p className="text-red-900 my-2">{error}</p>: <p className="text-green-900 my-2">User Updated Successfully</p>}
     </div>
   );
 }
