@@ -25,14 +25,17 @@ export default function Header() {
           </Link>
           
 
-          <Link to="/sign-up">
-            <li className="uppercase">Sign Up </li>
-          </Link>
+        
           <Link to="/profile">
             {currentUser ? (
               <img src={currentUser.avatar} className="w-7 h-7 object-cover" />
             ) : (
+              <>
+              <Link to="/sign-up">
+              <li className="uppercase">Sign Up </li>
+            </Link>
               <Link to="/sign-in">Sign in</Link>
+              </>
             )}
           </Link>
        
