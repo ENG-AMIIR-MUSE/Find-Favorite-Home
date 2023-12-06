@@ -37,12 +37,11 @@ export default function SignIn() {
       if (data.success === false) {
         dispatch(signInFailure(data.Message))
        
-
+        return ;
         
-      } else {
-        navigate("/");
       }
       dispatch(signSuccess(data))
+      navigate("/");
     } catch (error) {
       console.log(error);
     }

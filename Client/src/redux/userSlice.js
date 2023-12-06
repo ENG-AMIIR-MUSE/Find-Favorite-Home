@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   currentUser: null,
   loading: false,
-  errro: null,
+  error: null,
 };
 const userSlice = createSlice({
   name: "user",
@@ -15,28 +15,31 @@ const userSlice = createSlice({
       (state.loading = false), (state.currentUser = action.payload);
     },
     signInFailure: (state, action) => {
-      (state.loading = false), (state.errro = action.payload);
+      (state.loading = false), (state.error = action.payload);
     },
-    updateProfileStart: (state) => {
+    updateUserStart: (state) => {
       state.loading = true;
     },
-    updateProfileSuccess: (state, action) => {
-      state.loading = false, state.currentUser = action.payload;
+    updateUserSuccess: (state, action) => {
+      state.loading = false 
+      state.currentUser = action.payload;
     },
-    updateProfileFailure: (state, action) => {
-      state.loading = false, 
+    updateUserFailure: (state, action) => {
+      state.loading = false
       state.error = action.payload;
     },
-    deleteProfileStart:(state)=>{
+    deleteUserStart:(state)=>{
       state.loading = true
     },
-    deleteProfileSuccess:(state)=>{
+    deleteUserSuccess:(state,action)=>{
       state.currentUser  = null, 
       state.loading = false 
+      state.error = null
+    
       
       
     },
-    deleteProfileFailiure:(state,action)=>{
+    deleteUserFailure:(state,action)=>{
       state.loading = false,
       state.error = action.payload
     }
@@ -46,12 +49,12 @@ export const {
   signInStart,
   signSuccess,
   signInFailure,
-  updateProfileStart,
-  updateProfileSuccess,
-  updateProfileFailure,
-  deleteProfileStart,
-  deleteProfileSuccess,
-  deleteProfileFailiure,
+  updateUserFailure,
+  updateUserSuccess,
+  updateUserStart,
+  deleteUserStart,
+  deleteUserSuccess,
+  deleteUserFailure,
 
 } = userSlice.actions;
 
