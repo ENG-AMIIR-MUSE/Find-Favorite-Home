@@ -23,7 +23,7 @@ app.listen(PORT,(req,res)=>{
 })
 // first api test 
 
-app.use('/api/user',userRouter)
+app.use('/api/users',userRouter)
 app.use('/api/auth',authRouter)
 // creating a middle ware 
 

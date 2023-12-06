@@ -57,3 +57,15 @@ export const deleteUser  = async(req,res,next)=>{
     next(e)
   }
 }
+
+export const getUsers  = async(req,res,next)=>{
+  try{
+
+    const findUsers  = await User.find()
+    if(findUsers.length < 1 ) return  res.status(200).json("There is no users")
+
+    return res.status(200).json(findUsers)
+  }catch(e){
+    next(e)
+  }
+}
