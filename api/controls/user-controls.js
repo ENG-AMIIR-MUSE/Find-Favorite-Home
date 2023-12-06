@@ -51,7 +51,7 @@ export const deleteUser  = async(req,res,next)=>{
       const dUser  =await User.findByIdAndDelete(req.params.userId)
       if(!dUser) return next(errorHandler(400,"Account Can't Be Deleted"))
     
-      return res.status(200).json(dUser)
+      return res.status(200).json("user has been Deleted")
 
   }catch(e){
     next(e)

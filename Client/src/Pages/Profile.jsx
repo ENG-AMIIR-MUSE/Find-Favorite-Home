@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector ,useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useRef } from "react";
 
 import {
@@ -9,11 +9,14 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
-import { updateProfileFailure, updateProfileStart, updateProfileSuccess } from "../redux/userSlice";
+import {
+  updateProfileFailure,
+  updateProfileStart,
+  updateProfileSuccess,
+} from "../redux/userSlice";
 export default function Profile() {
-
   const [file, setFile] = useState(undefined);
-  const { currentUser,loading,error } = useSelector((state) => state.user);
+  const { currentUser, loading, error } = useSelector((state) => state.user);
   const [filePerc, setFilePerc] = useState(0);
   const dispatch = useDispatch();
   const [fileError, setFileError] = useState(null);
@@ -24,7 +27,7 @@ export default function Profile() {
       handleFileUpload(file);
     }
   }, [file]);
-  console.log("err",error)
+  console.log("err", error);
 
   const handleFileUpload = (file) => {
     const storage = getStorage(app);
@@ -51,7 +54,7 @@ export default function Profile() {
   const handleOnChange = async (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
-  console.log("id ....",currentUser._id)
+  console.log("id ....", currentUser._id);
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(updateProfileStart());
@@ -63,12 +66,23 @@ export default function Profile() {
       body: JSON.stringify(formData),
     });
     const res = await response.json();
-    console.log("res",res)
-    if(res.success === false){
-      dispatch(updateProfileFailure(res.Message))
-      return ;
+    console.log("res", res);
+    if (res.success === false) {
+      dispatch(updateProfileFailure(res.Message));
+      return;
     }
-    dispatch(updateProfileSuccess(res))
+    dispatch(updateProfileSuccess(res));
+  };
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`api/user/${currentUser._id}`, {
+        method: "delete",
+      });
+      let res = await response.json();
+      if(res.success == false)
+    } catch (e) {
+      console.log(e);
+    }
   };
   return (
     <div className="max-w-lg p-3 my-7 mx-auto">
@@ -128,23 +142,30 @@ export default function Profile() {
         />
         <button
           type="submit"
-        
-          disabled= {loading}
-
+          disabled={loading}
           className="rounded-lg  pl-3 bg-blue-900 text-white p-3 text-xl"
-         >{loading ? "Loading ...":"Update"}</button>
+        >
+          {loading ? "Loading ..." : "Update"}
+        </button>
         <input
           type="button"
           value="Create Listings"
           className="rounded-lg  pl-3 bg-green-900 text-white p-3 text-xl"
         />
         <div className="flex justify-between">
-          <p className="text-red-900">Sign Out</p>
-          <p className="text-red-900 ">Listengs</p>
+          <button onClick={handleDelete} className="text-red-900">
+            delete{" "}
+          </button>
+          <p className="text-red-900 ">Sign Out</p>
         </div>
         {/* <input type="text" placeholder='Enter Your Name' /> */}
       </form>
-          {error ? <p className="text-red-900 my-2">{error}</p>: <p className="text-green-900 my-2">User Updated Successfully</p>}
+
+      {error ? (
+        <p className="text-red-900 my-2">{error}</p>
+      ) : (
+        <p className="text-green-900 my-2">User Updated Successfully</p>
+      )}
     </div>
   );
 }
