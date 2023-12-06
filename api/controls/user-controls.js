@@ -40,3 +40,20 @@ export const updateUserInfo = async (req, res, next) => {
     next(e);
   }
 };
+
+
+export const deleteUser  = async(req,res,next)=>{
+
+  try{
+    
+      if(req.params.userId !== req.user.id) return next(errorHandler(400,"You can only delete your Account")) 
+    
+      const dUser  =await User.findByIdAndDelete(req.params.userId)
+      if(!dUser) return next(errorHandler(400,"Account Can't Be Deleted"))
+    
+      return res.status(200).json(dUser)
+
+  }catch(e){
+    next(e)
+  }
+}
