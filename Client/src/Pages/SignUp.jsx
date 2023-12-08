@@ -4,33 +4,15 @@ import { AiOutlineLock } from "react-icons/ai";
 import { useState } from "react";
 import {useNavigate} from  'react-router-dom'
 import Oauth from '../Components/Oauth'
-import { ToastContainer,toast } from 'react-toastify';
+import  display  from "../utility/display-notifcation";
 
 // import '/'
 export default function SignUp() {
-  const [error, setError] = useState(null);
+  const [ setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
   const navigate = useNavigate()
-  const notify = () =>
-  toast.success('Notification message!', {
-    position: toast.POSITION.TOP_CENTER,
-    autoClose: 2000, // Close after 5 seconds
-    hideProgressBar: true,
-    closeOnClick: true,
-    pauseOnHover: false,
-    draggable: false,
-    progress: undefined,
-    style: {
-      // Example custom styles
-      background: '#fff',
-      color: '#000',
-      fontSize: '16px',
-      borderRadius:'10px',
-      fontWeight: '400',
-     
-    },
-  });
+
   const handleSubmit = async (e) => {
     try {
       // setLoading : true 
@@ -49,18 +31,20 @@ export default function SignUp() {
       setError(null);
 
       if (data.success === false) {
-        setError(data.Message);
+        // setError(data.Message);
+        display.showMessage('error', data.Message);
         setLoading(false);
-        console.log("dataMessage", error);
+      
       }else{
         navigate('/sign-in')
       }
+      display.showMessage('success', 'User Created Successfully');
       setLoading(false);
-      console.log("response", data);
+     
     } catch (error) {
-      console.log("catching", error);
+      display.showMessage('error',error.message);
       setLoading(false);
-      setError(error.Message);
+      // setError(error.Message);
     }
   };
   const handleOnChange = (e) => {
@@ -69,7 +53,7 @@ export default function SignUp() {
       [e.target.id]: e.target.value,
     });
   };
-  // console.log("data", formData);
+
 
   return (
     <>
@@ -128,7 +112,7 @@ export default function SignUp() {
             Have an Account ?{" "}
             <span className="text-blue-900 mx-2">Sign In</span>
           </p>
-          {error ? <p className="text-red-500">{error}</p> : ""}
+        
         </form>
       </div>
     </>

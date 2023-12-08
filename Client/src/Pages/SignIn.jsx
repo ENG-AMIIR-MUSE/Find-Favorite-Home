@@ -5,10 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signInStart,signSuccess,signInFailure } from "../redux/userSlice";
 import Oauth from "../Components/Oauth";
+import display from "../utility/display-notifcation";
 // import '/'
 export default function SignIn() {
   const [formData, setFormData] = useState({})
-  const {error, loading}= useSelector((state)=>state.user)
+  const {loading}= useSelector((state)=>state.user)
   const dispatch  =  useDispatch()
   const navigate = useNavigate();
   const handleOnChange = (e) => {
@@ -35,15 +36,17 @@ export default function SignIn() {
 
      
       if (data.success === false) {
+        display.showMessage('error',data.Message)
         dispatch(signInFailure(data.Message))
        
         return ;
         
       }
       dispatch(signSuccess(data))
+      display.showMessage('success',"Login Successfully")
       navigate("/");
     } catch (error) {
-      console.log(error);
+      display.showMessage("success",error.message)
     }
   };
   return (
@@ -90,10 +93,7 @@ export default function SignIn() {
             Does'nt Have an Account ?{" "}
             <span className="text-blue-900 mx-2 ">Sign Up</span>
           </p>
-          <p className={error ? "text-red-500" : "text-green-800"}>
-            {error ? error : ""}
-            {console.log(error)}
-          </p>
+         
         </form>
       </div>
     </>
