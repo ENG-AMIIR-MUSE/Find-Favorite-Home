@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import userRouter from './routers/user-router.js'
 import authRouter from './routers/auth-route.js'
 import cookieParser from 'cookie-parser'
+import cors from 'cors';  
 // configuring the dotenv
 dotenv.config()
 
@@ -16,6 +17,7 @@ mongoose.connect(process.env.MONGO).then(()=>{
 const app =  express()
 app.use(cookieParser())
 app.use(express.json())
+app.use(cors())
 // use  express.json() to send a json data to the server 
 const PORT  = 3000;
 app.listen(PORT,(req,res)=>{

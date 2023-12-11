@@ -28,7 +28,7 @@ export default function Header() {
 
 
          <Link to = '/profile'>
-              <img src={currentUser.avatar} className="w-7 h-7 object-cover" />
+              <img src={currentUser.avatar} className="w-7 h-7  rounded-full object-cover" />
 
          </Link>
           ):(
